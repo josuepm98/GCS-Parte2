@@ -4,7 +4,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- Practica1
+  <ion-content>
   <ion-list-header>
     <ion-label>Classes</ion-label>
   </ion-list-header>
@@ -22,7 +23,14 @@
     <ion-col class="ion-text-center">
       <ion-button (click)="presentAlertConfirm()">Salir</ion-button>
     </ion-col>
-  </ion-row>
-  
-  
+  </ion-row> -->
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <app-card-deck *ngFor="let cardDeck of cardDecks" [myCardDeck]="cardDeck" (clicked)="select($event)"></app-card-deck>  
+  </ion-list>
+  <p>
+    Selected Card decks:
+    <span *ngFor="let name of selectedCDs">{{name}}&nbsp;</span>
+  </p>
 </ion-content>
