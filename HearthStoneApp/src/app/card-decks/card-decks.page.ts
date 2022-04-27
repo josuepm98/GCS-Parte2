@@ -34,13 +34,14 @@ export class CardDecksPage implements OnInit {
     fetch(this.mockupFile).then(res => res.json())
     .then(json => {
       this.cardDecks = json;
+      console.log(this.cardDecks);
     });
   }
 
-  select(name: string) {
-    const esta = this.selectedCDs.indexOf(name);
+  select(card: string) {
+    const esta = this.selectedCDs.indexOf(card);
     if(esta === -1){
-      this.selectedCDs.push(name);
+      this.selectedCDs.push(card);
     } else {
       this.selectedCDs.splice(esta, 1);
     }
