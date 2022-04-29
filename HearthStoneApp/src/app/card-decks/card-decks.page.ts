@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+// Practica 1-2(Parte1)
+// import { Router } from '@angular/router';
+// import { ToastController } from '@ionic/angular';
+// import { AlertController } from '@ionic/angular';
 
-import { CardDeck } from './../models/card-deck';
+
+import { CardService } from './../card.service';
+import { CardDeck } from '../card/shared/card.model';
+import { HttpClientModule } from '@angular/common/http';
 
 // import { Plugins } from '@capacitor/core';
 
@@ -16,72 +21,95 @@ import { CardDeck } from './../models/card-deck';
   templateUrl: './card-decks.page.html',
   styleUrls: ['./card-decks.page.scss'],
 })
-export class CardDecksPage implements OnInit {
+
+export class CardDecksPage /*implements OnInit*/ {
+
+  public cardDecks: CardDeck []=[];
+
+  private readonly ALLOWED_DECKS = ['classes', 'factions', 'qualities', 'types', 'races'];
+
+  constructor(private cardSrv: CardService){
+    this.getCardDecks();
+  }
+
+  private extractAllowedDecks(cardDecks: CardDeck[]) {
+    this.ALLOWED_DECKS.forEach((deckName: string) => this.cardDecks.push({name: deckName, types: cardDecks[deckName]})
+    );
+  }
+
+  private getCardDecks(){
+    this.cardSrv.getAllCardDecks().subscribe(
+      (cdSrv: CardDeck[]) => {
+        this.extractAllowedDecks(cdSrv);
+      }
+    );
+  }
 
 
   //Practica1
   //readonly cardDecks: string [] = ['Druid', 'Mage', 'Warrior', 'Rogue', 'Shaman'];
 
-  readonly mockupFile: string = './assets/data/carddecks.json';
+  //Practica2-Parte1
+  // readonly mockupFile: string = './assets/data/carddecks.json';
 
-  cardDecks: CardDeck [];
+  // cardDecks: CardDeck [];
 
-  selectedCDs: string[]=[];
+  // selectedCDs: string[]=[];
 
-  constructor(private router: Router, public toastController: ToastController, public alertController: AlertController) {}
+  // constructor(private router: Router, public toastController: ToastController, public alertController: AlertController) {}
 
-  public getData(){
-    fetch(this.mockupFile).then(res => res.json())
-    .then(json => {
-      this.cardDecks = json;
-      console.log(this.cardDecks);
-    });
-  }
+  // public getData(){
+  //   fetch(this.mockupFile).then(res => res.json())
+  //   .then(json => {
+  //     this.cardDecks = json;
+  //     console.log(this.cardDecks);
+  //   });
+  // }
 
-  select(card: string) {
-    const esta = this.selectedCDs.indexOf(card);
-    if(esta === -1){
-      this.selectedCDs.push(card);
-    } else {
-      this.selectedCDs.splice(esta, 1);
-    }
-  }
+  // select(card: string) {
+  //   const esta = this.selectedCDs.indexOf(card);
+  //   if(esta === -1){
+  //     this.selectedCDs.push(card);
+  //   } else {
+  //     this.selectedCDs.splice(esta, 1);
+  //   }
+  // }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Bienvenido a HeartStone',
-      position: 'top',
-      duration: 2000
-    });
-    toast.present();
-  }
+  // async presentToast() {
+  //   const toast = await this.toastController.create({
+  //     message: 'Bienvenido a HeartStone',
+  //     position: 'top',
+  //     duration: 2000
+  //   });
+  //   toast.present();
+  // }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: 'Saliendo de HearthStone',
-      message: '¿Estas seguro de que quieres salir?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Salir',
-          handler: () => {
-            // App.exitApp();
-            // Al no funcionar lo anterior, navego al tab3
-            this.router.navigate(['/tabs/tab3']);
-          }
-        }
-      ]
-    });
+  // async presentAlertConfirm() {
+  //   const alert = await this.alertController.create({
+  //     header: 'Saliendo de HearthStone',
+  //     message: '¿Estas seguro de que quieres salir?',
+  //     buttons: [
+  //       {
+  //         text: 'Cancelar',
+  //         role: 'cancel',
+  //         cssClass: 'secondary'
+  //       }, {
+  //         text: 'Salir',
+  //         handler: () => {
+  //           // App.exitApp();
+  //           // Al no funcionar lo anterior, navego al tab3 para ver que llegamos a esta línea
+  //           this.router.navigate(['/tabs/tab3']);
+  //         }
+  //       }
+  //     ]
+  //   });
 
-    await alert.present();
-  }
+  //   await alert.present();
+  // }
 
-  ngOnInit() {
-    this.getData();
-    this.presentToast();
-  }
+  // ngOnInit() {
+  //   this.getData();
+  //   this.presentToast();
+  // }
 
 }

@@ -25,12 +25,25 @@
     </ion-col>
   </ion-row> -->
 
-<ion-content [fullscreen]="true">
+<!-- Practica2-Parte1
   <ion-list>
     <app-card-deck *ngFor="let cardDeck of cardDecks" [myCardDeck]="cardDeck" (clicked)="select($event)"></app-card-deck>  
   </ion-list>
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button (click)="presentAlertConfirm()">Salir</ion-button>
+    </ion-col>
+  </ion-row>
   <p>
     Selected Card decks:
     <span *ngFor="let card of selectedCDs">{{card}}&nbsp;</span>
-  </p>
+  </p> -->
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <app-card-list *ngFor="let cardDeck of cardDecks"
+    [listName]="cardDeck.name"
+    [items]="cardDeck.types"
+    ></app-card-list>
+  </ion-list>
 </ion-content>

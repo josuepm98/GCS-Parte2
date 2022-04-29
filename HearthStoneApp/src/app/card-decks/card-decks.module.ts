@@ -8,6 +8,7 @@ import { CardDecksPageRoutingModule } from './card-decks-routing.module';
 
 import { CardDecksPage } from './card-decks.page';
 import { CardDeckComponent } from '../card-deck/card-deck.component';
+import { CardListComponent } from './../card-list/card-list.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { CardDeckComponent } from '../card-deck/card-deck.component';
     IonicModule,
     CardDecksPageRoutingModule
   ],
-  declarations: [CardDecksPage, CardDeckComponent]
+  declarations: [CardDecksPage, CardDeckComponent, CardListComponent]
 })
 export class CardDecksPageModule {}
